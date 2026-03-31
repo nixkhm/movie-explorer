@@ -1,7 +1,11 @@
 import Database from "better-sqlite3";
 import path from "path";
 
-const db = new Database(path.join(process.cwd(), "favorites.db"));
+const db = new Database(
+  process.env.NODE_ENV === "production"
+    ? "/tmp/favorites.db"
+    : path.join(process.cwd(), "favorites.db")
+);
 
 db.exec(
   `CREATE TABLE IF NOT EXISTS favorites (
