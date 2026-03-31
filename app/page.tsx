@@ -124,6 +124,17 @@ export default function Home() {
           {!hasSearched && <p>Search for a movie to get started.</p>}
         </>
       )}
+      <footer className="mt-auto py-6 text-fourth text-sm">
+        Designed & built by{" "}
+        <a
+          href="https://github.com/nixkhm"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-second transition-colors"
+        >
+          Nicholas Masters
+        </a>
+      </footer>
     </main>
   );
 }

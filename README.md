@@ -4,6 +4,8 @@
 
 # Movie Explorer
 
+**<a href="https://movie-explorer-nick.vercel.app/" target="_blank">https://movie-explorer-nick.vercel.app/</a>**
+
 ### Web app where users can search movies, view details, and save favorites with a personal rating/comment
 
 ## Tech Stack
