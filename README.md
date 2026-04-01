@@ -12,7 +12,7 @@
 
 - **Framework:** Next.js (React/TypeScript)
 - **Styling:** Tailwind CSS
-- **Database:** SQLite (`better-sqlite3`)
+- **Database:** SQLite ([Turso](https://turso.tech) / `@libsql/client`)
 - **API:** TMDB API
 
 ## Setup & Run Instructions
@@ -76,7 +76,7 @@
 
 5. **SQLite DB Persistence (~30 mins)**
 
-- Install `better-sqlite3` dependency and SQL statement to create `favorites` table with movie metadata
+- Install `@libsql/client` dependency and create Turso SQLite DB for `favorites` table with movie metadata
 - Add routes for CRUD operations on `favorite` resources
 
 6. **Favorites Functionality (~60 mins)**
@@ -104,8 +104,8 @@
 - LocalStorage does not persist across devices/browsers
 - Favorites, ratings, and notes are stored server-side and persist through private browsing and cache clears
 - **Tradeoffs:**
-  - SQLite is single file, can't scale to distributed deployments
   - Raw SQL queries, no type safety
+  - Remote hosted DB (Turso) adds a network call
 
 ### Next.js API Routes - TMDB API Proxy
 

@@ -1,18 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import db from "@/app/lib/db";
+import db, { initDb } from "@/app/lib/db";
 
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ movieId: string }> },
 ) {
   try {
+    await initDb();
     const { movieId } = await params;
-    const result = db
-      .prepare("DELETE FROM favorites WHERE movieId = ?")
-      .run(parseInt(movieId));
+    const result = await db.execute({
+      sql: "DELETE FROM favorites WHERE movieId = ?",
+      args: [parseInt(movieId)],
+    });
 
     // movieId does not exist
-    if (result.changes === 0) {
+    if (result.rowsAffected === 0) {
       return NextResponse.json(
         { error: "Favorite not found" },
         { status: 404 },
@@ -32,18 +34,21 @@ export async function PATCH(
   { params }: { params: Promise<{ movieId: string }> },
 ) {
   try {
+    await initDb();
     const { movieId } = await params;
     const body = await request.json();
 
-    db.prepare(
-      "UPDATE favorites SET rating = ?, note = ? WHERE movieId = ?",
-    ).run(body.rating, body.note, parseInt(movieId));
+    await db.execute({
+      sql: "UPDATE favorites SET rating = ?, note = ? WHERE movieId = ?",
+      args: [body.rating, body.note, parseInt(movieId)],
+    });
 
-    const updated = db
-      .prepare("SELECT * FROM favorites WHERE movieId = ?")
-      .get(parseInt(movieId));
+    const updated = await db.execute({
+      sql: "SELECT * FROM favorites WHERE movieId = ?",
+      args: [parseInt(movieId)],
+    });
 
-    return NextResponse.json(updated);
+    return NextResponse.json(updated.rows[0]);
   } catch (e) {
     return NextResponse.json(
       { error: "Failed to update favorite" },
